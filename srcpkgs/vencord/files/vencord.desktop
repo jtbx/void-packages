@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Vencord
+Comment=Desktop application for Discord that includes Vencord
+GenericName=Internet Messenger
+Type=Application
+Exec=/usr/bin/vencord
+Icon=vencord
+Categories=Network;InstantMessaging;
+StartupWMClass=vencord
+Keywords=discord;vencord;

@@ -1,0 +1,32 @@
+# Template file for 'vencord'
+pkgname=vencord
+version=0.4.4
+revision=1
+archs="x86_64"
+hostmakedepends="pnpm"
+depends="libnotify xdg-utils"
+short_desc="Desktop application for Discord that includes Vencord"
+maintainer="Jeremy Baxter <jtbx@disroot.org>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vencord/vesktop"
+distfiles="https://github.com/Vencord/Vesktop/archive/refs/tags/v${version}.tar.gz"
+checksum=98776a826017803826b8f24483ac460ce9d725d75882ea1b79a303c3d25da620
+
+do_build() {
+	pnpm i
+	patch -p0 -i "${FILESDIR}"/tsx.diff
+	pnpm package:dir
+}
+
+do_install() {
+	vmkdir opt
+	vmkdir usr/bin
+	vmkdir usr/share/pixmaps
+
+	vcopy dist/linux-unpacked/ opt/vencord
+	vinstall "${FILESDIR}"/vencord.desktop 644 usr/share/applications/vencord.desktop
+	vinstall static/icon.png 644 usr/share/pixmaps/vencord.png
+	ln -s /opt/vencord/vencorddesktop "${DESTDIR}"/usr/bin/vencord
+
+	vlicense LICENSE
+}
